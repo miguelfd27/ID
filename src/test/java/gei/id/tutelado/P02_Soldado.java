@@ -16,8 +16,10 @@ import org.junit.runner.Description;
 import gei.id.tutelado.configuracion.Configuracion;
 import gei.id.tutelado.configuracion.ConfiguracionJPA;
 import gei.id.tutelado.dao.PersonaDao;
+import gei.id.tutelado.dao.PersonaDaoJPA;
 import gei.id.tutelado.model.EntradaLog;
-import gei.id.tutelado.model.PersonaDaoJPA;
+import gei.id.tutelado.model.Persona;
+import gei.id.tutelado.model.Soldado;
 
 public class P02_Soldado {
 
@@ -95,16 +97,17 @@ public class P02_Soldado {
     	
 		log.info("Probando recuperacion por codigo EXISTENTE --------------------------------------------------");
 
-    	s = persDao.recuperaPorId(produtorDatos.s1A.());
+    	s = persDao.recuperaPorId(produtorDatos.s0.getDni());
+    	
 
-    	Assert.assertEquals (produtorDatos.s1A.getDni(),     s.getDni());
-    	Assert.assertEquals (produtorDatos.s1A.getNombre(), s.getNombre());
-    	Assert.assertEquals (produtorDatos.s1A.getFechaAlta(),   s.getFechaAlta());
-    	Assert.assertEquals (produtorDatos.s1A.getFechaNacimiento(),   s.getFechaNacimiento());
-    	Assert.assertEquals (produtorDatos.s1A.getRango(),   s.getFechaNacimiento());
-    	Assert.assertEquals (produtorDatos.s1A.getPeso(),   s.getPeso());
-    	Assert.assertEquals (produtorDatos.s1A.getAltura(),   s.getAltura());
-    	Assert.assertEquals (produtorDatos.s1A.getCursos(),   s.getCursos());
+    	Assert.assertEquals (produtorDatos.s0.getDni(),     s.getDni());
+    	Assert.assertEquals (produtorDatos.s0.getNombre(), s.getNombre());
+    	Assert.assertEquals (produtorDatos.s0.getFechaAlta(),   s.getFechaAlta());
+    	Assert.assertEquals (produtorDatos.s0.getFechaNacimiento(),   s.getFechaNacimiento());
+    	Assert.assertEquals (produtorDatos.s0.getRango(),   s.getRango());
+    	Assert.assertEquals (produtorDatos.s0.getPeso(),    s.getPeso());
+    	Assert.assertEquals (produtorDatos.s0.getAltura(),  s.getAltura());
+    	Assert.assertEquals (produtorDatos.s0.getCursos(),    s.getCursos());
 
     	
 

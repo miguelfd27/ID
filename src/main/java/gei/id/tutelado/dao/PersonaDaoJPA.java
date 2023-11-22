@@ -1,4 +1,4 @@
-package gei.id.tutelado.model;
+package gei.id.tutelado.dao;
 
 import java.util.List;
 
@@ -6,7 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import gei.id.tutelado.configuracion.Configuracion;
-import gei.id.tutelado.dao.PersonaDao;
+import gei.id.tutelado.model.Persona;
+import gei.id.tutelado.model.Soldado;
 
 public class PersonaDaoJPA implements PersonaDao {
 
@@ -20,15 +21,15 @@ public class PersonaDaoJPA implements PersonaDao {
 	}
 
 	@Override
-	public Persona recuperaPorId(String dni) {
+	public Soldado recuperaPorId(String dni) {
 
-		List<Persona> personas=null;
+		List<Soldado> personas=null;
 		
 		try {
 			em = emf.createEntityManager();
 			em.getTransaction().begin();
 
-			personas = em.createNamedQuery("Curso.recuperaPorDni", Persona.class)
+			personas = em.createNamedQuery("Persona.recuperaPorSoldado", Soldado.class)
 					.setParameter("dni", dni).getResultList(); 
 
 			em.getTransaction().commit();

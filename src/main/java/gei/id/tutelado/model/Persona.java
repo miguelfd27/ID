@@ -11,7 +11,10 @@ initialValue=0, allocationSize=1)
 
 @NamedQueries ({
 	@NamedQuery (name="Persona.recuperaPorDni",
-				 query="SELECT p FROM Persona p where p.dni=:dni")
+				 query="SELECT p FROM Persona p where p.dni=:dni"),
+	@NamedQuery (name="Persona.recuperaPorSoldado",
+	 query="SELECT p FROM Soldado p where p.dni=:dni"),
+	
 })
 
 @Entity

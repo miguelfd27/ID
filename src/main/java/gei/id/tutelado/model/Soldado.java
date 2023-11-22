@@ -23,7 +23,7 @@ public class Soldado extends Persona{
     @ManyToMany(mappedBy="soldados", cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
     private Set<Curso> cursos = new HashSet<Curso>();
     
-    
+   
 
 	public String getRango() {
 		return rango;
