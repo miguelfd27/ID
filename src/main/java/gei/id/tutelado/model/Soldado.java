@@ -6,9 +6,17 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+@NamedQueries ({
+	@NamedQuery (name="Soldado.recuperaPorSoldado",
+	 query="SELECT s FROM Soldado s where s.dni=:dni"),
+	@NamedQuery (name="Soldado.recuperaTodosSoldado",
+	 query="SELECT s FROM Soldado s ORDER BY s.dni")
+	
+})
+
 @Entity
 @Table(name="t_sold_tcc")
-public class Soldado extends Persona{
+public class Soldado extends Persona implements Comparable<Soldado>{
 	
 
     @Column(unique = false, nullable = false)
@@ -20,7 +28,7 @@ public class Soldado extends Persona{
     @Column(unique =false, nullable = false)
     private Double altura;
 
-    @ManyToMany(mappedBy="soldados", cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+    @ManyToMany(mappedBy="soldados", fetch=FetchType.EAGER)
     private Set<Curso> cursos = new HashSet<Curso>();
     
    
@@ -58,16 +66,12 @@ public class Soldado extends Persona{
 	}
 	
 	public void agregarCurso(Curso curso) {
-	    if (curso == null || this == null) {
-	        throw new RuntimeException("");
-	    }
-	    if (!getCursos().contains(curso)) {
+	    
 	        getCursos().add(curso);
-	        if (!curso.getSoldados().contains(this)) {
-	            curso.getSoldados().add(this);
-	        }
-	    }
+	        curso.getSoldados().add(this);
+	    
 	}
+
 	
 	public void eliminarCurso(Curso curso) {
 	    if (getCursos().contains(curso)) {
@@ -77,6 +81,19 @@ public class Soldado extends Persona{
 	        }
 	    }
 	}
+	
+	@Override
+	public int compareTo(Soldado otroSoldado) {
+	    if (this.rango == null && otroSoldado.rango == null) {
+	        return 0; // Ambos son nulos, considerados iguales
+	    } else if (this.rango == null) {
+	        return -1; // Este es nulo, considerado menor
+	    } else if (otroSoldado.rango == null) {
+	        return 1; // El otro es nulo, considerado mayor
+	    }
+	    return this.rango.compareTo(otroSoldado.rango);
+	}
+
 
 
 	

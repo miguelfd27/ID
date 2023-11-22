@@ -63,7 +63,7 @@ public class ProdutorDatosProba {
        temas.add("Tema 2");
        temas.add("Tema 3");
        
-       SortedSet<Soldado> soldados = new TreeSet<Soldado>();
+      // SortedSet<Soldado> soldados = new TreeSet<Soldado>();
 
        this.c0 = new Curso();
         this.c0.setIdCurso(00001L);
@@ -72,7 +72,7 @@ public class ProdutorDatosProba {
         this.c0.setTipo("Terrestre");
         this.c0.setTemas(temas);
         this.c0.setInstructor(null);
-        this.c0.setSoldados(soldados);
+ //       this.c0.setSoldados(soldados);
         
         this.c1 = new Curso();
         this.c1.setIdCurso(00002L);
@@ -81,7 +81,7 @@ public class ProdutorDatosProba {
         this.c1.setTipo("Aéreo");
         this.c1.setTemas(temas);
         this.c1.setInstructor(null);
-        this.c1.setSoldados(soldados);
+     //   this.c1.setSoldados(soldados);
 
         this.listaCursos = new ArrayList<Curso> ();
         this.listaCursos.add(0,c0);
@@ -90,22 +90,7 @@ public class ProdutorDatosProba {
     }
     
     public void creaSoldadosNuevos() {
-    	
-    	 SortedSet<String> temas = new TreeSet<String>();
-         temas.add("Tema 1");
-         temas.add("Tema 2");
-         temas.add("Tema 3");
-         
-    	// SortedSet<Soldado> soldados = new TreeSet<Soldado>();
-
-         this.c0 = new Curso();
-          this.c0.setIdCurso(00001L);
-          this.c0.setDuracion(60);
-          this.c0.setFechaInicio(LocalDate.now());
-          this.c0.setTipo("Terrestre");
-          this.c0.setTemas(temas);
-          this.c0.setInstructor(null);
-      //    this.c0.setSoldados(soldados);
+ 
 
         this.s0 = new Soldado();
         this.s0.setDni("12345678A");
@@ -115,7 +100,7 @@ public class ProdutorDatosProba {
         this.s0.setRango("Cabo");
         this.s0.setPeso(70.0);
         this.s0.setAltura(185.0);
-        s0.agregarCurso(c0);
+        //s0.agregarCurso(c0);
         //s0.agregarCurso(c1);
 
         this.s1 = new Soldado();
@@ -208,10 +193,10 @@ public class ProdutorDatosProba {
              em.persist(c);
              // DESCOMENTAR SE A PROPAGACION DO PERSIST NON ESTA ACTIVADA
              
-             Iterator<Soldado> itEL = c.getSoldados().iterator();
+           /*  Iterator<Soldado> itEL = c.getSoldados().iterator();
              while (itEL.hasNext()) {
                 em.persist(itEL.next());
-             }
+             }*/
              
           }
           em.getTransaction().commit();
@@ -263,12 +248,12 @@ public class ProdutorDatosProba {
           
           Iterator <Curso> itU = em.createNamedQuery("Curso.recuperaTodosCursos", Curso.class).getResultList().iterator();
           while (itU.hasNext()) em.remove(itU.next());
-         // Iterator <Persona> itP = em.createNamedQuery("Persona.recuperaPorDni", Persona.class).getResultList().iterator();
-         // while (itP.hasNext()) em.remove(itP.next());
+         Iterator <Soldado> itP = em.createNamedQuery("Soldado.recuperaTodosSoldado", Soldado.class).getResultList().iterator();
+         while (itP.hasNext()) em.remove(itP.next());
 
           
           em.createNativeQuery("UPDATE taboa_ids SET ultimo_valor_id=0 WHERE nome_id='idCurso'" ).executeUpdate();
-          em.createNativeQuery("UPDATE taboa_ids SET ultimo_valor_id=0 WHERE nome_id='idPersona'" ).executeUpdate();
+          em.createNativeQuery("UPDATE taboa_ids SET ultimo_valor_id=0 WHERE nome_id='idSoldado'" ).executeUpdate();
 
           em.getTransaction().commit();
           em.close();

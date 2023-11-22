@@ -50,7 +50,7 @@ public class Curso {
     @JoinColumn(name = "id_inst", nullable = true)
     private Instructor instructor;
 
-    @ManyToMany(fetch=FetchType.LAZY)
+    @ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.PERSIST)
     @JoinTable(
         name = "t_curso_sold",
         joinColumns = @JoinColumn(name = "id_curso"),

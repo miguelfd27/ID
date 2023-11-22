@@ -19,7 +19,7 @@ initialValue=0, allocationSize=1)
 
 @Entity
 @Inheritance (strategy=InheritanceType.TABLE_PER_CLASS)
-@Table(name="t_Pers_tcc")
+//@Table(name="t_Pers_tcc")
 public abstract class Persona  {	
 	@Id
     @GeneratedValue(generator="xeradorIdsPersonas")

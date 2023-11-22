@@ -29,7 +29,7 @@ public class PersonaDaoJPA implements PersonaDao {
 			em = emf.createEntityManager();
 			em.getTransaction().begin();
 
-			personas = em.createNamedQuery("Persona.recuperaPorSoldado", Soldado.class)
+			personas = em.createNamedQuery("Soldado.recuperaPorSoldado", Soldado.class)
 					.setParameter("dni", dni).getResultList(); 
 
 			em.getTransaction().commit();
@@ -46,12 +46,12 @@ public class PersonaDaoJPA implements PersonaDao {
 	
 
 	@Override
-	public Persona alta(Persona persona) {
+	public Persona alta(Persona soldado) {
 		try {
 			em = emf.createEntityManager();
 			em.getTransaction().begin();
 
-			em.persist(persona);
+			em.persist(soldado);
 
 			em.getTransaction().commit();
 			em.close();
@@ -63,7 +63,7 @@ public class PersonaDaoJPA implements PersonaDao {
 				throw(ex);
 			}
 		}
-		return persona;
+		return soldado;
 	}
 	
 

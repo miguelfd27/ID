@@ -82,8 +82,12 @@ public class P02_Soldado {
     	log.info("");	
 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
 
+		produtorDatos.creaCursosSueltos();
 		produtorDatos.creaSoldadosNuevos();
-    	produtorDatos.guardaSoldados();
+		produtorDatos.s0.agregarCurso(produtorDatos.c0);
+    	//produtorDatos.guardaSoldados();
+    	produtorDatos.guardaCursos();
+
 
 
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
@@ -118,6 +122,104 @@ public class P02_Soldado {
     	Assert.assertNull (s);
 
     } 
+   
+    @Test
+    public void test02_Alta() {
+
+
+    	log.info("");	
+		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+
+		produtorDatos.creaCursosSueltos();
+    	produtorDatos.guardaCursos();
+    	produtorDatos.creaSoldadosNuevos();
+
+    	log.info("");	
+		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
+    	log.info("Obxectivo: Proba da gravación de entradas de log soltas\n"   
+    			+ "\t\t\t\t Casos contemplados:\n"
+    			+ "\t\t\t\t a) Primeira entrada de log vinculada a un usuario\n"
+    			+ "\t\t\t\t b) Nova entrada de log para un usuario con entradas previas\n");     	
+
+    	// Situación de partida:
+    	// u1 desligado    	
+    	// e1A, e1B transitorios
+
+    	produtorDatos.s0.agregarCurso(produtorDatos.c0);
+
+		
+    	log.info("");	
+		log.info("Gravando primeira entrada de log dun usuario --------------------------------------------------------------------");
+    	Assert.assertNull(produtorDatos.s0.getId());
+    	persDao.alta(produtorDatos.s0);
+    	Assert.assertNotNull(produtorDatos.s0.getId());
+
+
+    }
+    
+    @Test 
+    public void test03_Modificacion() {
+
+    	Soldado s1, s2;
+    	Double nuevoPeso;
+    	
+    	log.info("");	
+		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+  
+		produtorDatos.creaCursosSueltos();
+		produtorDatos.creaSoldadosNuevos();
+		produtorDatos.s0.agregarCurso(produtorDatos.c0);
+    	//produtorDatos.guardaSoldados();
+    	produtorDatos.guardaCursos();
+
+
+    	log.info("");	
+		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
+    	log.info("Obxectivo: Proba de modificación da información dunha entrada de log solta\n");
+ 
+    	
+    	// Situación de partida:
+    	// e1A desligado
+    	
+		nuevoPeso =Double.valueOf(75.69);
+
+		s1 = persDao.recuperaPorId(produtorDatos.s0.getDni());
+
+		Assert.assertNotEquals(nuevoPeso, s1.getPeso());
+    	s1.setPeso(nuevoPeso);
+
+    	persDao.actualiza(s1);    	
+    	
+		s2 = persDao.recuperaPorId(produtorDatos.s0.getDni());
+		Assert.assertEquals (nuevoPeso, s2.getPeso());
+
+    	// NOTA: Non probamos modificación de usuario da entrada porque non ten sentido no dominio considerado
+
+    }
+    
+    @Test 
+    public void test04_Eliminacion() {
+    	
+    	log.info("");	
+		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+
+		produtorDatos.creaSoldadosNuevos();
+    	produtorDatos.guardaSoldados();
+
+    	log.info("");	
+		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
+    	log.info("Obxectivo: Proba de eliminación de entrada de log solta (asignada a usuario)\n");
+    	
+    	// Situación de partida:
+    	// e1A desligado
+
+		Assert.assertNotNull(persDao.recuperaPorId(produtorDatos.s0.getDni()));
+    	persDao.elimina(produtorDatos.s0);    	
+		Assert.assertNull(persDao.recuperaPorId(produtorDatos.s0.getDni()));
+
+    } 	
+    
+
 	
 	
 
