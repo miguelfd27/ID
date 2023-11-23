@@ -40,7 +40,7 @@ public class Curso {
     @Column(unique = false, nullable = false)
     private String tipo;
     
-    @ElementCollection
+    @ElementCollection(fetch=FetchType.LAZY)
     @CollectionTable (name="t_curso_temas",joinColumns=@JoinColumn(name="id_curso"))
     @Column(name="temas", nullable=false)
     @OrderBy

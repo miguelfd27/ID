@@ -18,6 +18,7 @@ import gei.id.tutelado.configuracion.ConfiguracionJPA;
 import gei.id.tutelado.dao.PersonaDao;
 import gei.id.tutelado.dao.PersonaDaoJPA;
 import gei.id.tutelado.model.EntradaLog;
+import gei.id.tutelado.model.Instructor;
 import gei.id.tutelado.model.Persona;
 import gei.id.tutelado.model.Soldado;
 
@@ -83,10 +84,16 @@ public class P02_Soldado {
 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
 
 		produtorDatos.creaCursosSueltos();
+		produtorDatos.creaInstructoresNuevos(); // Agrega esta línea para crear instructores
+	    produtorDatos.guardaInstructores();
 		produtorDatos.creaSoldadosNuevos();
 		produtorDatos.s0.agregarCurso(produtorDatos.c0);
     	//produtorDatos.guardaSoldados();
-    	produtorDatos.guardaCursos();
+		Instructor instructor = produtorDatos.i0;
+	    produtorDatos.c0.setInstructor(instructor);
+	    Instructor instructor2 = produtorDatos.i1;
+	    produtorDatos.c1.setInstructor(instructor2);
+	    produtorDatos.guardaCursos();
 
 
 
@@ -131,6 +138,13 @@ public class P02_Soldado {
 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
 
 		produtorDatos.creaCursosSueltos();
+		 produtorDatos.creaInstructoresNuevos(); // Agrega esta línea para crear instructores
+		    produtorDatos.guardaInstructores();
+		    
+		    Instructor instructor = produtorDatos.i0;
+		    produtorDatos.c0.setInstructor(instructor);
+		    Instructor instructor2 = produtorDatos.i1;
+		    produtorDatos.c1.setInstructor(instructor2);
     	produtorDatos.guardaCursos();
     	produtorDatos.creaSoldadosNuevos();
 
@@ -167,9 +181,14 @@ public class P02_Soldado {
 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
   
 		produtorDatos.creaCursosSueltos();
+		 produtorDatos.creaInstructoresNuevos(); // Agrega esta línea para crear instructores
+		    produtorDatos.guardaInstructores();
 		produtorDatos.creaSoldadosNuevos();
 		produtorDatos.s0.agregarCurso(produtorDatos.c0);
-    	//produtorDatos.guardaSoldados();
+		Instructor instructor = produtorDatos.i0;
+	    produtorDatos.c0.setInstructor(instructor);
+	    Instructor instructor2 = produtorDatos.i1;
+	    produtorDatos.c1.setInstructor(instructor2);
     	produtorDatos.guardaCursos();
 
 
@@ -204,10 +223,16 @@ public class P02_Soldado {
 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
 
 		produtorDatos.creaCursosSueltos();
+		produtorDatos.creaInstructoresNuevos(); // Agrega esta línea para crear instructores
+	    produtorDatos.guardaInstructores();
 		produtorDatos.creaSoldadosNuevos();
 		produtorDatos.s0.agregarCurso(produtorDatos.c0);
-    	//produtorDatos.guardaSoldados();
-    	produtorDatos.guardaCursos();
+		Instructor instructor = produtorDatos.i0;
+	    produtorDatos.c0.setInstructor(instructor);
+	    Instructor instructor2 = produtorDatos.i1;
+	    produtorDatos.c1.setInstructor(instructor2);
+	    produtorDatos.guardaCursos();
+	    
     	log.info("");	
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
     	log.info("Obxectivo: Proba de eliminación de entrada de log solta (asignada a usuario)\n");

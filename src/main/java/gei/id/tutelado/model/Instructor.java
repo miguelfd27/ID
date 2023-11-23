@@ -10,8 +10,9 @@ import javax.persistence.*;
 	@NamedQuery (name="Instructor.recuperaPorInstructor",
 	 query="SELECT i FROM Instructor i where i.dni=:dni"),
 	@NamedQuery (name="Instructor.recuperaTodosInstructor",
-	 query="SELECT i FROM Instructor i ORDER BY i.dni")
-	
+	 query="SELECT i FROM Instructor i ORDER BY i.dni"),
+	@NamedQuery (name="Instructor.cursosInstructor",
+	 query="SELECT COUNT(c) FROM Curso c WHERE c.instructor = :instructor ORDER BY c.idCurso ASC")
 })
 
 @Entity

@@ -2,6 +2,7 @@ package gei.id.tutelado;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.LazyInitializationException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -20,7 +21,9 @@ import gei.id.tutelado.configuracion.ConfiguracionJPA;
 import gei.id.tutelado.dao.CursoDao;
 import gei.id.tutelado.dao.CursoDaoJPA;
 import gei.id.tutelado.model.Curso;
+import gei.id.tutelado.model.EntradaLog;
 import gei.id.tutelado.model.Instructor;
+import gei.id.tutelado.model.Usuario;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -109,7 +112,7 @@ public class P01_Curso {
 	    instructor = produtorDatos.i0;
 	    produtorDatos.c0.setInstructor(instructor);
 	    instructor2 = produtorDatos.i1;
-	    produtorDatos.c1.setInstructor(instructor);
+	    produtorDatos.c1.setInstructor(instructor2);
 	    produtorDatos.guardaCursos();
 
 	    c = cursDao.recuperaPorId(produtorDatos.c0.getIdCurso());
@@ -142,7 +145,11 @@ public class P01_Curso {
 			log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
 	  
 			produtorDatos.creaCursosSueltos();
-	    	
+		    produtorDatos.creaInstructoresNuevos(); // Agrega esta línea para crear instructores
+		    produtorDatos.guardaInstructores();
+			  Instructor instructor = produtorDatos.i0;
+			    produtorDatos.c0.setInstructor(instructor);
+			  
 	    	log.info("");	
 			log.info("Inicio do test --------------------------------------------------------------------------------------------------");
 	    	log.info("Obxectivo: Proba de gravación na BD de novo curso (sen clases asociadas)\n");
@@ -161,8 +168,16 @@ public class P01_Curso {
 	    	log.info("");	
 			log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
 
-			produtorDatos.creaCursosSueltos();
-	    	produtorDatos.guardaCursos();
+			  produtorDatos.creaCursosSueltos();
+			    produtorDatos.creaInstructoresNuevos(); // Agrega esta línea para crear instructores
+			    produtorDatos.guardaInstructores();
+			    
+			    // Asigna un instructor al curso
+			    Instructor instructor = produtorDatos.i0;
+			    produtorDatos.c0.setInstructor(instructor);
+			    Instructor instructor2 = produtorDatos.i1;
+			    produtorDatos.c1.setInstructor(instructor2);
+			    produtorDatos.guardaCursos();
 
 	    	
 	    	log.info("");	
@@ -186,8 +201,15 @@ public class P01_Curso {
 	     	log.info("");	
 	 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
  
-	 		produtorDatos.creaCursosSueltos();
-	     	produtorDatos.guardaCursos();
+	 		 produtorDatos.creaCursosSueltos();
+	 		 produtorDatos.creaInstructoresNuevos(); // Agrega esta línea para crear instructores
+			 produtorDatos.guardaInstructores();
+			    
+	 		 Instructor instructor = produtorDatos.i0;
+			 produtorDatos.c0.setInstructor(instructor);
+			 Instructor instructor2 = produtorDatos.i1;
+			 produtorDatos.c1.setInstructor(instructor2);
+			 produtorDatos.guardaCursos();
 
 	     	log.info("");	
 	 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
@@ -207,6 +229,66 @@ public class P01_Curso {
 	 		c2 = cursDao.recuperaPorId(produtorDatos.c0.getIdCurso());
 	 		Assert.assertEquals (nuevoTipo, c2.getTipo());
 
+	     } 	
+	 	 
+	 	 @Test 
+	     public void test08_LAZY() {
+	     	
+	     	Curso c;
+	     	
+	     	Boolean excepcion;
+	     	
+	     	log.info("");	
+	 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+
+	 		 produtorDatos.creaCursosSueltos();
+	 		 produtorDatos.creaInstructoresNuevos(); 
+			 produtorDatos.guardaInstructores();   
+	 		 Instructor instructor = produtorDatos.i0;
+			 produtorDatos.c0.setInstructor(instructor);
+			 Instructor instructor2 = produtorDatos.i1;
+			 produtorDatos.c1.setInstructor(instructor2);
+			 produtorDatos.guardaCursos();
+
+	 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
+	     	log.info("Obxectivo: Proba da recuperación de propiedades LAZY\n"   
+	 		+ "\t\t\t\t Casos contemplados:\n"
+	 		+ "\t\t\t\t a) Recuperación de curso con colección (LAZY) de Temas  \n"
+	 		+ "\t\t\t\t b) Carga forzada de colección LAZY da dita coleccion\n"     	
+	 		+ "\t\t\t\t c) Recuperacion de Temas suelta con referencia (EAGER) a Curso\n");     	
+
+	     	
+	     	
+	 		log.info("Probando (excepcion tras) recuperacion LAZY ---------------------------------------------------------------------");
+	     	
+	     	c = cursDao.recuperaPorId(produtorDatos.c1.getIdCurso());
+	 		log.info("Acceso a temas de Curso");
+	     	try	{
+	         	Assert.assertEquals(3, c.getTemas().size());
+	         	Assert.assertEquals("Tema 1", c.getTemas().first());
+		     	Assert.assertEquals("Tema 3", c.getTemas().last());	
+	         	excepcion=false;
+	     	} catch (LazyInitializationException ex) {
+	     		excepcion=true;
+	     		log.info(ex.getClass().getName());
+	     	};    	
+	     	Assert.assertTrue(excepcion);
+	     
+	     	log.info("");
+	     	log.info("Probando carga forzada de coleccion LAZY ------------------------------------------------------------------------");
+	     	
+	     	c = cursDao.recuperaPorId(produtorDatos.c1.getIdCurso());   // Curso c con proxy sen inicializar
+	     	c = cursDao.recuperaTemas(c);						// Curso c con proxy xa inicializado
+	     	
+	     	Assert.assertEquals(3, c.getTemas().size());
+	     	Assert.assertEquals("Tema 1", c.getTemas().first());
+	     	Assert.assertEquals("Tema 3", c.getTemas().last());
+
+	     	log.info("");
+	     	log.info("Probando acceso a referencia EAGER ------------------------------------------------------------------------------");
+	     
+	     	c = cursDao.recuperaPorId(produtorDatos.c0.getIdCurso());
+	     	Assert.assertEquals(produtorDatos.i0, c.getInstructor());
 	     } 	
 	     
 	 	
