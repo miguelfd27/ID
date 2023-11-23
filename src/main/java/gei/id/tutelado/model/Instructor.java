@@ -5,6 +5,15 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+
+@NamedQueries ({
+	@NamedQuery (name="Instructor.recuperaPorInstructor",
+	 query="SELECT i FROM Instructor i where i.dni=:dni"),
+	@NamedQuery (name="Instructor.recuperaTodosInstructor",
+	 query="SELECT i FROM Instructor i ORDER BY i.dni")
+	
+})
+
 @Entity
 @Table(name="t_inst_tcc")
 public class Instructor extends Persona{

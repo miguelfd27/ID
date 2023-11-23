@@ -20,6 +20,7 @@ import gei.id.tutelado.configuracion.ConfiguracionJPA;
 import gei.id.tutelado.dao.CursoDao;
 import gei.id.tutelado.dao.CursoDaoJPA;
 import gei.id.tutelado.model.Curso;
+import gei.id.tutelado.model.Instructor;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -79,44 +80,60 @@ public class P01_Curso {
 	
 	@Test
 	public void test01_Recuperacion() {
-    	
-    	Curso c;
-    	
-    	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+	    
+	    Curso c;
+	    Instructor instructor, instructor2;
 
-		produtorDatos.creaCursosSueltos();
-    	produtorDatos.guardaCursos();
-    	
-    	log.info("");	
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de recuperación desde a BD de cursos (sen entradas asociadas) por idCurso\n"   
-    			+ "\t\t\t\t Casos contemplados:\n"
-    			+ "\t\t\t\t a) Recuperación por idCurso existente\n"
-    			+ "\t\t\t\t b) Recuperacion por idCurso inexistente\n");
+	    log.info("");    
+	    log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+	    
+	    produtorDatos.creaCursosSueltos();
+	    produtorDatos.creaInstructoresNuevos(); // Agrega esta línea para crear instructores
+	    produtorDatos.guardaInstructores(); // Agrega esta línea para guardar instructores
+	    
+	    log.info("");    
+	    log.info("Inicio do test --------------------------------------------------------------------------------------------------");
+	    log.info("Obxectivo: Proba de recuperación desde a BD de cursos (sen entradas asociadas) por idCurso\n"   
+	            + "\t\t\t\t Casos contemplados:\n"
+	            + "\t\t\t\t a) Recuperación por idCurso existente\n"
+	            + "\t\t\t\t b) Recuperacion por idCurso inexistente\n");
 
-    	// Situación de partida:
-    	// c0 desligado    	
+	    // Situación de partida:
+	    // c0 desligado    
 
-    	log.info("Probando recuperacion por idCurso EXISTENTE --------------------------------------------------");
+	    log.info("Probando recuperacion por idCurso EXISTENTE --------------------------------------------------");
 
-    	c = cursDao.recuperaPorId(produtorDatos.c0.getIdCurso());
-    	Assert.assertEquals(produtorDatos.c0.getIdCurso(),      c.getIdCurso());
-    	Assert.assertEquals(produtorDatos.c0.getDuracion(),     c.getDuracion());
-    	Assert.assertEquals(produtorDatos.c0.getFechaInicio(), c.getFechaInicio());
-    	Assert.assertEquals(produtorDatos.c0.getTipo(), c.getTipo());
-    	c=cursDao.recuperaTemas(c);
+	   // c = cursDao.recuperaPorId(produtorDatos.c0.getIdCurso());
+	    
+	    // Asigna un instructor al curso
+	    instructor = produtorDatos.i0;
+	    produtorDatos.c0.setInstructor(instructor);
+	    instructor2 = produtorDatos.i1;
+	    produtorDatos.c1.setInstructor(instructor);
+	    produtorDatos.guardaCursos();
 
-    	Assert.assertEquals(produtorDatos.c0.getTemas(), c.getTemas());
+	    c = cursDao.recuperaPorId(produtorDatos.c0.getIdCurso());
 
+	    // Guarda el curso actualizado
 
-    	log.info("");	
-		log.info("Probando recuperacion por idCurso INEXISTENTE -----------------------------------------------");
-    	
-    	c = cursDao.recuperaPorId(78556465464L);
-    	Assert.assertNull (c);
+	    Assert.assertEquals(produtorDatos.c0.getIdCurso(),      c.getIdCurso());
+	    Assert.assertEquals(produtorDatos.c0.getDuracion(),     c.getDuracion());
+	    Assert.assertEquals(produtorDatos.c0.getFechaInicio(), c.getFechaInicio());
+	    Assert.assertEquals(produtorDatos.c0.getTipo(), c.getTipo());
+	    Assert.assertEquals(instructor, c.getInstructor());
 
-    } 
+	    c = cursDao.recuperaTemas(c);
+
+	    Assert.assertEquals(produtorDatos.c0.getTemas(), c.getTemas());
+
+	    log.info("");    
+	    log.info("Probando recuperacion por idCurso INEXISTENTE -----------------------------------------------");
+	    
+	    c = cursDao.recuperaPorId(78556465464L);
+	    Assert.assertNull (c);
+
+	}
+
 	
 	 @Test 
 	    public void test02_Alta() {
@@ -168,7 +185,7 @@ public class P01_Curso {
 	     	
 	     	log.info("");	
 	 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
-
+ 
 	 		produtorDatos.creaCursosSueltos();
 	     	produtorDatos.guardaCursos();
 

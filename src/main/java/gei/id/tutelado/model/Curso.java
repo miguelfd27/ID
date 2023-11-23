@@ -47,7 +47,7 @@ public class Curso {
     private SortedSet<String> temas = new TreeSet<String>();
     
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name = "id_inst", nullable = true)
+    @JoinColumn(name = "id_inst", nullable = false)
     private Instructor instructor;
 
     @ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.PERSIST)
