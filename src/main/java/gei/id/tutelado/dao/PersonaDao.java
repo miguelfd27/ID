@@ -11,14 +11,10 @@ public interface PersonaDao {
 	void setup (Configuracion config);
 	
 	// OPERACIONS CRUD BASICAS
-		Soldado recuperaPorId (String dni);
+		Persona recuperaPorId (String dni);
 		Persona alta (Persona persona);
-		void elimina (Soldado soldado);
+		void elimina (Persona persona);
 		Persona actualiza (Persona persona);
-		Instructor recuperaPorId2(String dni);
-
-		void eliminaInstructor(Instructor instructor);
-		
 		//QUERIES ADICIONAIS
 
 

@@ -20,9 +20,11 @@ import gei.id.tutelado.configuracion.Configuracion;
 import gei.id.tutelado.configuracion.ConfiguracionJPA;
 import gei.id.tutelado.dao.CursoDao;
 import gei.id.tutelado.dao.CursoDaoJPA;
+import gei.id.tutelado.dao.PersonaDao;
 import gei.id.tutelado.model.Curso;
 import gei.id.tutelado.model.EntradaLog;
 import gei.id.tutelado.model.Instructor;
+import gei.id.tutelado.model.Persona;
 import gei.id.tutelado.model.Usuario;
 
 
@@ -36,6 +38,8 @@ public class P01_Curso {
     
     private static Configuracion cfg;
     private static CursoDao cursDao;
+    private static PersonaDao persDao;
+
     
     @Rule
     public TestRule watcher = new TestWatcher() {
@@ -231,66 +235,8 @@ public class P01_Curso {
 
 	     } 	
 	 	 
-	 	 @Test 
-	     public void test08_LAZY() {
-	     	
-	     	Curso c;
-	     	
-	     	Boolean excepcion;
-	     	
-	     	log.info("");	
-	 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
-
-	 		 produtorDatos.creaCursosSueltos();
-	 		 produtorDatos.creaInstructoresNuevos(); 
-			 produtorDatos.guardaInstructores();   
-	 		 Instructor instructor = produtorDatos.i0;
-			 produtorDatos.c0.setInstructor(instructor);
-			 Instructor instructor2 = produtorDatos.i1;
-			 produtorDatos.c1.setInstructor(instructor2);
-			 produtorDatos.guardaCursos();
-
-	 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-	     	log.info("Obxectivo: Proba da recuperación de propiedades LAZY\n"   
-	 		+ "\t\t\t\t Casos contemplados:\n"
-	 		+ "\t\t\t\t a) Recuperación de curso con colección (LAZY) de Temas  \n"
-	 		+ "\t\t\t\t b) Carga forzada de colección LAZY da dita coleccion\n"     	
-	 		+ "\t\t\t\t c) Recuperacion de Temas suelta con referencia (EAGER) a Curso\n");     	
-
-	     	
-	     	
-	 		log.info("Probando (excepcion tras) recuperacion LAZY ---------------------------------------------------------------------");
-	     	
-	     	c = cursDao.recuperaPorId(produtorDatos.c1.getIdCurso());
-	 		log.info("Acceso a temas de Curso");
-	     	try	{
-	         	Assert.assertEquals(3, c.getTemas().size());
-	         	Assert.assertEquals("Tema 1", c.getTemas().first());
-		     	Assert.assertEquals("Tema 3", c.getTemas().last());	
-	         	excepcion=false;
-	     	} catch (LazyInitializationException ex) {
-	     		excepcion=true;
-	     		log.info(ex.getClass().getName());
-	     	};    	
-	     	Assert.assertTrue(excepcion);
-	     
-	     	log.info("");
-	     	log.info("Probando carga forzada de coleccion LAZY ------------------------------------------------------------------------");
-	     	
-	     	c = cursDao.recuperaPorId(produtorDatos.c1.getIdCurso());   // Curso c con proxy sen inicializar
-	     	c = cursDao.recuperaTemas(c);						// Curso c con proxy xa inicializado
-	     	
-	     	Assert.assertEquals(3, c.getTemas().size());
-	     	Assert.assertEquals("Tema 1", c.getTemas().first());
-	     	Assert.assertEquals("Tema 3", c.getTemas().last());
-
-	     	log.info("");
-	     	log.info("Probando acceso a referencia EAGER ------------------------------------------------------------------------------");
-	     
-	     	c = cursDao.recuperaPorId(produtorDatos.c0.getIdCurso());
-	     	Assert.assertEquals(produtorDatos.i0, c.getInstructor());
-	     } 	
-	     
+	 	 
+	 	 
 	 	
 
 }

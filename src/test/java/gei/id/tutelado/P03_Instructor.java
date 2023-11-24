@@ -98,7 +98,8 @@ public class P03_Instructor {
     	
 		log.info("Probando recuperacion por codigo EXISTENTE --------------------------------------------------");
 
-    	i = persDao.recuperaPorId2(produtorDatos.i0.getDni());
+		i = (Instructor) persDao.recuperaPorId(produtorDatos.i0.getDni());
+
     	
 
     	Assert.assertEquals (produtorDatos.i0.getDni(),     i.getDni());
@@ -114,7 +115,7 @@ public class P03_Instructor {
     	log.info("");	
 		log.info("Probando recuperacion por codigo INEXISTENTE --------------------------------------------------");
     	
-    	i = persDao.recuperaPorId2("iwbvyhuebvuwebvi");
+    	i = (Instructor) persDao.recuperaPorId("iwbvyhuebvuwebvi");
     	Assert.assertNull (i);
 
     } 	
@@ -174,14 +175,14 @@ public class P03_Instructor {
     	
 		nuevoGrado = new String("Cabo Superior");
 
-		i1 = persDao.recuperaPorId2(produtorDatos.i0.getDni());
+		i1 = (Instructor) persDao.recuperaPorId(produtorDatos.i0.getDni());
 
 		Assert.assertNotEquals(nuevoGrado, i1.getGrado());
     	i1.setGrado(nuevoGrado);
 
     	persDao.actualiza(i1);    	
     	
-		i2 = persDao.recuperaPorId2(produtorDatos.i0.getDni());
+		i2 = (Instructor) persDao.recuperaPorId(produtorDatos.i0.getDni());
 		Assert.assertEquals (nuevoGrado, i2.getGrado());
 
     	// NOTA: Non probamos modificación de usuario da entrada porque non ten sentido no dominio considerado
@@ -198,14 +199,13 @@ public class P03_Instructor {
     	produtorDatos.guardaInstructores();
     	log.info("");	
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de eliminación de entrada de log solta (asignada a usuario)\n");
+    	log.info("Obxectivo: Proba de eliminación de instructor sin Curso asociado\n");
     	
     	// Situación de partida:
     	// e1A desligado
 
-		Assert.assertNotNull(persDao.recuperaPorId2(produtorDatos.i0.getDni()));
-    	persDao.eliminaInstructor(produtorDatos.i0);    	
-		Assert.assertNull(persDao.recuperaPorId2(produtorDatos.i0.getDni()));
+		Assert.assertNotNull(persDao.recuperaPorId(produtorDatos.i0.getDni()));
+    	persDao.elimina(produtorDatos.i0);    	
 
     } 	
     

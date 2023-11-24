@@ -108,7 +108,7 @@ public class P02_Soldado {
     	
 		log.info("Probando recuperacion por codigo EXISTENTE --------------------------------------------------");
 
-    	s = persDao.recuperaPorId(produtorDatos.s0.getDni());
+    	s = (Soldado) persDao.recuperaPorId(produtorDatos.s0.getDni());
     	
 
     	Assert.assertEquals (produtorDatos.s0.getDni(),     s.getDni());
@@ -125,7 +125,7 @@ public class P02_Soldado {
     	log.info("");	
 		log.info("Probando recuperacion por codigo INEXISTENTE --------------------------------------------------");
     	
-    	s = persDao.recuperaPorId("iwbvyhuebvuwebvi");
+    	s = (Soldado) persDao.recuperaPorId("iwbvyhuebvuwebvi");
     	Assert.assertNull (s);
 
     } 	
@@ -202,14 +202,14 @@ public class P02_Soldado {
     	
 		nuevoPeso =Double.valueOf(75.69);
 
-		s1 = persDao.recuperaPorId(produtorDatos.s0.getDni());
+		s1 = (Soldado) persDao.recuperaPorId(produtorDatos.s0.getDni());
 
 		Assert.assertNotEquals(nuevoPeso, s1.getPeso());
     	s1.setPeso(nuevoPeso);
 
     	persDao.actualiza(s1);    	
     	
-		s2 = persDao.recuperaPorId(produtorDatos.s0.getDni());
+		s2 = (Soldado) persDao.recuperaPorId(produtorDatos.s0.getDni());
 		Assert.assertEquals (nuevoPeso, s2.getPeso());
 
     	// NOTA: Non probamos modificación de usuario da entrada porque non ten sentido no dominio considerado

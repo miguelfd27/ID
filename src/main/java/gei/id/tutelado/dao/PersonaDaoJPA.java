@@ -24,15 +24,15 @@ public class PersonaDaoJPA implements PersonaDao {
 	}
 
 	@Override
-	public Soldado recuperaPorId(String dni) {
+	public Persona recuperaPorId(String dni) {
 
-		List<Soldado> personas=null;
+		List<Persona> personas=null;
 		
 		try {
 			em = emf.createEntityManager();
 			em.getTransaction().begin();
-
-			personas = em.createNamedQuery("Soldado.recuperaPorSoldado", Soldado.class)
+			
+			personas = em.createNamedQuery("Persona.recuperaPorDni", Persona.class)
 					.setParameter("dni", dni).getResultList(); 
 
 			em.getTransaction().commit();
@@ -47,30 +47,6 @@ public class PersonaDaoJPA implements PersonaDao {
 		return (personas.size()==0?null:personas.get(0));
 	}
 	
-	@Override
-	public Instructor recuperaPorId2(String dni) {
-
-		List<Instructor> instructores=null;
-		
-		try {
-			em = emf.createEntityManager();
-			em.getTransaction().begin();
-
-			instructores = em.createNamedQuery("Instructor.recuperaPorInstructor", Instructor.class)
-					.setParameter("dni", dni).getResultList(); 
-
-			em.getTransaction().commit();
-			em.close();
-		} catch (Exception ex ) {
-			if (em!=null && em.isOpen()) {
-				if (em.getTransaction().isActive()) em.getTransaction().rollback();
-				em.close();
-				throw(ex);
-			}
-		}
-		return (instructores.size()==0?null:instructores.get(0));
-	}
-
 	@Override
 	public Persona alta(Persona soldado) {
 		try {
@@ -94,17 +70,19 @@ public class PersonaDaoJPA implements PersonaDao {
 	
 
 	@Override
-	public void elimina(Soldado soldado) {
+	public void elimina(Persona persona) {
 		try {
 			
 			em = emf.createEntityManager();
 			em.getTransaction().begin();
 
-			Soldado personaTmp = em.find (Soldado.class, soldado.getId());
-			Set<Curso> cursos = personaTmp.getCursos();
+			Persona personaTmp = em.find (Persona.class, persona.getId());
+			if(personaTmp instanceof Soldado ) {
+				Soldado soldado = (Soldado) personaTmp;
+			Set<Curso> cursos = soldado.getCursos();
 			for (Curso curso : cursos) {
-			    personaTmp.eliminarCurso(curso);
-			}
+			    soldado.eliminarCurso(curso);
+			}}
 
 			em.remove (personaTmp);
 
@@ -121,31 +99,6 @@ public class PersonaDaoJPA implements PersonaDao {
 				
 	}
 	
-	@Override
-	public void eliminaInstructor(Instructor instructor) {
-		try {
-			
-			em = emf.createEntityManager();
-			em.getTransaction().begin();
-
-			Instructor instructorTmp = em.find (Instructor.class, instructor.getId());
-			
-
-			em.remove (instructorTmp);
-
-			em.getTransaction().commit();
-			em.close();
-			
-		} catch (Exception ex ) {
-			if (em!=null && em.isOpen()) {
-				if (em.getTransaction().isActive()) em.getTransaction().rollback();
-				em.close();
-				throw(ex);
-			}
-		}
-				
-	}
-
 
 	@Override
 	public Persona actualiza(Persona persona) {
