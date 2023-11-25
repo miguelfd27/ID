@@ -181,6 +181,33 @@ public Curso recuperaTemas(Curso curso) {
 }
 
 @Override
+public List<Curso> CursosConInstructoresYSoldados() {
+    List<Curso> cursos = null;
+
+    try {
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        cursos = em.createNamedQuery("Curso.CursosConInstructoresYSoldados", Curso.class).getResultList();
+
+        em.getTransaction().commit();
+    } catch (Exception ex) {
+        if (em != null && em.isOpen()) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw ex;
+        }
+    } finally {
+        if (em != null && em.isOpen()) {
+            em.close();
+        }
+    }
+
+    return cursos;
+}
+
+
+
+@Override
 public List<Curso> cursosInstructor(Instructor instructor) {
 		List<Curso> cursosInstructor=null;
 

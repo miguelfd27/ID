@@ -15,7 +15,14 @@ initialValue=0, allocationSize=1)
 	@NamedQuery (name="Curso.recuperaPorId",
 				 query="SELECT c FROM Curso c where c.idCurso=:idCurso"),
 	@NamedQuery (name="Curso.recuperaTodosCursos",
-				 query="SELECT c FROM Curso c ORDER BY c.idCurso")
+				 query="SELECT c FROM Curso c ORDER BY c.idCurso"),
+	@NamedQuery(
+		    name = "Curso.CursosConInstructoresYSoldados",
+		    query = "SELECT DISTINCT c FROM Curso c INNER JOIN c.instructor i INNER JOIN c.soldados a ORDER BY c.fechaInicio DESC"
+		)
+
+
+
 })
 
 

@@ -121,7 +121,32 @@ public class PersonaDaoJPA implements PersonaDao {
 		}
 		return (persona);
 	}
+	
+	@Override
+	public List<Object[]> obtenerSoldadosConOCuSinCursosOrdenados() {
+	    List<Object[]> resultados = null;
+
+	    try {
+	        em = emf.createEntityManager();
+	        em.getTransaction().begin();
+
+	        resultados = em.createNamedQuery("Soldado.obtenerSoldadosConOCuSinCursosOrdenados", Object[].class)
+	                .getResultList();
+
+	        em.getTransaction().commit();
+	    } catch (Exception ex) {
+	        if (em != null && em.isOpen()) {
+	            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+	            throw ex;
+	        }
+	    } finally {
+	        if (em != null && em.isOpen()) {
+	            em.close();
+	        }
+	    }
+
+	    return resultados;
+	}
+
 
 }
-
-

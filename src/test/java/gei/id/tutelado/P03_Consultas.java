@@ -133,7 +133,7 @@ public class P03_Consultas {
     	// Situación de partida:
     	// u1, e1A, e1B desligados
 
-		listaE = logDao.recuperaTodasUsuario(produtorDatos.u0);
+		li	staE = logDao.recuperaTodasUsuario(produtorDatos.u0);
 		Assert.assertEquals(0, listaE.size());
 		
 		listaE = logDao.recuperaTodasUsuario(produtorDatos.u1);

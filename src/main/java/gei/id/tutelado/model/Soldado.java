@@ -10,8 +10,11 @@ import javax.persistence.*;
 	@NamedQuery (name="Soldado.recuperaPorSoldado",
 	 query="SELECT s FROM Soldado s where s.dni=:dni"),
 	@NamedQuery (name="Soldado.recuperaTodosSoldado",
-	 query="SELECT s FROM Soldado s ORDER BY s.dni")
-	
+	 query="SELECT s FROM Soldado s ORDER BY s.dni"),
+	@NamedQuery(
+		    name = "Soldado.obtenerSoldadosConOCuSinCursosOrdenados",
+		    query = "SELECT s, c FROM Soldado s LEFT JOIN s.cursos c ORDER BY s.nombre"	)
+
 })
 
 @Entity

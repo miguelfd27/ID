@@ -25,6 +25,8 @@ public interface CursoDao {
 		List<Curso> recuperaTodosCursos(Curso c);
 		List<Curso> cursosInstructor(Instructor instructor);
 
+		List<Curso> CursosConInstructoresYSoldados();
+
 		
 
 
