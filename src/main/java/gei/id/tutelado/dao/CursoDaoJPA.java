@@ -12,7 +12,6 @@ import gei.id.tutelado.model.Curso;
 import gei.id.tutelado.model.Instructor;
 
 public class CursoDaoJPA implements CursoDao {
-	
 
 	private EntityManagerFactory emf; 
 	private EntityManager em;
@@ -50,6 +49,7 @@ public class CursoDaoJPA implements CursoDao {
 
 	@Override
 	public Curso alta(Curso curso) {
+
 		try {
 			em = emf.createEntityManager();
 			em.getTransaction().begin();
@@ -72,6 +72,7 @@ public class CursoDaoJPA implements CursoDao {
 
 	@Override
 	public void elimina(Curso curso) {
+
 		try {
 			
 			em = emf.createEntityManager();
@@ -118,120 +119,114 @@ public class CursoDaoJPA implements CursoDao {
 
 
 
-@Override
-public List<Curso> recuperaTodosCursos(Curso c) {
-	List <Curso> cursos=null;
-
-	try {
-		em = emf.createEntityManager();
-		em.getTransaction().begin();
-
-		cursos = em.createNamedQuery("Curso.recuperaTodosCursos", Curso.class).setParameter("c", c).getResultList(); 
-
-		em.getTransaction().commit();
-		em.close();	
-
-	}
-	catch (Exception ex ) {
-		if (em!=null && em.isOpen()) {
-			if (em.getTransaction().isActive()) em.getTransaction().rollback();
-			em.close();
-			throw(ex);
-		}
-	}
-
-	return cursos;
-}
-@Override
-public Curso recuperaTemas(Curso curso) {
-
-	try {
-		em = emf.createEntityManager();
-		em.getTransaction().begin();
+	@Override
+	public List<Curso> recuperaTodosCursos(Curso c) {
+		List <Curso> cursos=null;
 
 		try {
-			curso.getTemas().size();
-		} catch (Exception ex2) {
-			if (ex2 instanceof LazyInitializationException) {
-				/* OPCION DE IMPLEMENTACION 1 (comentada): Cargar a propiedade "manualmente" cunha consulta,
-				 *  e actualizar tamen "manualmente" o valor da propiedade  */
-				//List<EntradaLog> entradas = (List<EntradaLog>) entityManager.createQuery("From EntradaLog l where l.usuario=:usuario order by dataHora").setParameter("usuario",user).getResultList();
-				//user.setEntradasLog (entradas);
+			em = emf.createEntityManager();
+			em.getTransaction().begin();
 
-				/* OPCION DE IMPLEMENTACIÓN 2: Volver a ligar o obxecto usuario a un novo CP,
-				 * e acceder á propiedade nese momento, para que Hibernate a cargue.*/
-				curso = em.merge(curso);
-				curso.getTemas().size();
+			cursos = em.createNamedQuery("Curso.recuperaTodosCursos", Curso.class).setParameter("c", c).getResultList();
 
-			} else {
-				throw ex2;
+			em.getTransaction().commit();
+			em.close();
+
+		}
+		catch (Exception ex ) {
+			if (em!=null && em.isOpen()) {
+				if (em.getTransaction().isActive()) em.getTransaction().rollback();
+				em.close();
+				throw(ex);
 			}
 		}
-		em.getTransaction().commit();
-		em.close();
+		return cursos;
 	}
-	catch (Exception ex ) {
-		if (em!=null && em.isOpen()) {
-			if (em.getTransaction().isActive()) em.getTransaction().rollback();
+
+	@Override
+	public Curso recuperaTemas(Curso curso) {
+
+		try {
+			em = emf.createEntityManager();
+			em.getTransaction().begin();
+
+			try {
+				curso.getTemas().size();
+			}
+			catch (Exception ex2) {
+				if (ex2 instanceof LazyInitializationException) {
+					curso = em.merge(curso);
+					curso.getTemas().size();
+
+				}
+				else {
+					throw ex2;
+				}
+			}
+			em.getTransaction().commit();
 			em.close();
-			throw(ex);
 		}
+		catch (Exception ex ) {
+			if (em!=null && em.isOpen()) {
+				if (em.getTransaction().isActive()) em.getTransaction().rollback();
+				em.close();
+				throw(ex);
+			}
+		}
+		return (curso);
 	}
-	return (curso);
-}
 
-@Override
-public List<Curso> CursosConInstructoresYSoldados() {
-    List<Curso> cursos = null;
+	@Override
+	public List<Curso> CursosConInstructoresYSoldados() {
+    	List<Curso> cursos = null;
 
-    try {
-        em = emf.createEntityManager();
-        em.getTransaction().begin();
+    	try {
+        	em = emf.createEntityManager();
+        	em.getTransaction().begin();
 
-        cursos = em.createNamedQuery("Curso.CursosConInstructoresYSoldados", Curso.class).getResultList();
+        	cursos = em.createNamedQuery("Curso.CursosConInstructoresYSoldados", Curso.class).getResultList();
 
-        em.getTransaction().commit();
-    } catch (Exception ex) {
-        if (em != null && em.isOpen()) {
-            if (em.getTransaction().isActive()) em.getTransaction().rollback();
-            throw ex;
-        }
-    } finally {
-        if (em != null && em.isOpen()) {
-            em.close();
-        }
-    }
-
-    return cursos;
-}
-
+        	em.getTransaction().commit();
+		}
+		catch (Exception ex) {
+        	if (em != null && em.isOpen()) {
+            	if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            	throw ex;
+        	}
+    	}
+		finally {
+        	if (em != null && em.isOpen()) {
+            	em.close();
+        	}
+    	}
+    	return cursos;
+	}
 
 
-@Override
-public List<Curso> cursosInstructor(Instructor instructor) {
+
+	@Override
+	public List<Curso> cursosInstructor(Instructor instructor) {
 		List<Curso> cursosInstructor=null;
 
-    try {
-       em = emf.createEntityManager();
-       em.getTransaction().begin();
+    	try {
+       		em = emf.createEntityManager();
+       		em.getTransaction().begin();
 
-       cursosInstructor = em.createNamedQuery("Instructor.cursosInstructor", Curso.class).setParameter("instructor", instructor).getResultList();
+       		cursosInstructor = em.createNamedQuery("Instructor.cursosInstructor", Curso.class).setParameter("instructor", instructor).getResultList();
 
-       em.getTransaction().commit();
-       em.close();
+       		em.getTransaction().commit();
+       		em.close();
 
-    }
-    catch (Exception ex ) {
-       if (em!=null && em.isOpen()) {
-          if (em.getTransaction().isActive()) em.getTransaction().rollback();
-          em.close();
-          throw(ex);
-       }
-    }
-
-    return cursosInstructor;
-}
-
+    	}
+    	catch (Exception ex ) {
+			if (em != null && em.isOpen()) {
+				if (em.getTransaction().isActive()) em.getTransaction().rollback();
+				em.close();
+				throw (ex);
+			}
+		}
+		return cursosInstructor;
+	}
 }
 
 

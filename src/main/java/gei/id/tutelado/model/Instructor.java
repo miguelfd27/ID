@@ -8,17 +8,16 @@ import javax.persistence.*;
 
 @NamedQueries ({
 	@NamedQuery (name="Instructor.recuperaPorInstructor",
-	 query="SELECT i FROM Instructor i where i.dni=:dni"),
+				 query="SELECT i FROM Instructor i where i.dni=:dni"),
 	@NamedQuery (name="Instructor.recuperaTodosInstructor",
-	 query="SELECT i FROM Instructor i ORDER BY i.dni"),
+				 query="SELECT i FROM Instructor i ORDER BY i.dni"),
 	@NamedQuery (name="Instructor.cursosInstructor",
-	 query="SELECT COUNT(c) FROM Curso c WHERE c.instructor = :instructor ORDER BY c.idCurso ASC")
+	 			 query="SELECT COUNT(c) FROM Curso c WHERE c.instructor = :instructor ORDER BY c.idCurso ASC")
 })
 
 @Entity
 @Table(name="t_inst_tcc")
 public class Instructor extends Persona{
-	
 
     @Column(unique = false, nullable = false)
     private Double salario;
@@ -56,15 +55,9 @@ public class Instructor extends Persona{
 		this.condecoraciones = condecoraciones;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Instructor [salario=" + salario + ", grado=" + grado + ", condecoraciones=" + condecoraciones + "]";
 	}
-
-    
-    
-    
- 
 
 }

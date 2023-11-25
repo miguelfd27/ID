@@ -13,13 +13,12 @@ initialValue=0, allocationSize=1)
 	@NamedQuery (name="Persona.recuperaPorDni",
 				 query="SELECT p FROM Persona p where p.dni=:dni"),
 	@NamedQuery (name="Persona.recuperaPorSoldado",
-	 query="SELECT p FROM Soldado p where p.dni=:dni"),
+	 			 query="SELECT p FROM Soldado p where p.dni=:dni"),
 	
 })
 
 @Entity
 @Inheritance (strategy=InheritanceType.TABLE_PER_CLASS)
-//@Table(name="t_Pers_tcc")
 public abstract class Persona  {	
 	@Id
     @GeneratedValue(generator="xeradorIdsPersonas")
@@ -108,8 +107,5 @@ public abstract class Persona  {
 		return "Persona [id=" + id + ", dni=" + dni + ", nombre=" + nombre + ", fechaAlta=" + fechaAlta
 				+ ", fechaNacimiento=" + fechaNacimiento + "]";
 	}
-
-	
-	
 
 }

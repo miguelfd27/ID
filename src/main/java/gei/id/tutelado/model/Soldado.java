@@ -8,19 +8,16 @@ import javax.persistence.*;
 
 @NamedQueries ({
 	@NamedQuery (name="Soldado.recuperaPorSoldado",
-	 query="SELECT s FROM Soldado s where s.dni=:dni"),
+	 			 query="SELECT s FROM Soldado s where s.dni=:dni"),
 	@NamedQuery (name="Soldado.recuperaTodosSoldado",
-	 query="SELECT s FROM Soldado s ORDER BY s.dni"),
-	@NamedQuery(
-		    name = "Soldado.obtenerSoldadosConOCuSinCursosOrdenados",
-		    query = "SELECT s, c FROM Soldado s LEFT JOIN s.cursos c ORDER BY s.nombre"	)
-
+			 	 query="SELECT s FROM Soldado s ORDER BY s.dni"),
+	@NamedQuery(name = "Soldado.obtenerSoldadosConOCuSinCursosOrdenados",
+		    	query = "SELECT s, c FROM Soldado s LEFT JOIN s.cursos c ORDER BY s.nombre")
 })
 
 @Entity
 @Table(name="t_sold_tcc")
 public class Soldado extends Persona implements Comparable<Soldado>{
-	
 
     @Column(unique = false, nullable = false)
     private String rango;
@@ -33,8 +30,7 @@ public class Soldado extends Persona implements Comparable<Soldado>{
 
     @ManyToMany(mappedBy="soldados", fetch=FetchType.EAGER)
     private Set<Curso> cursos = new HashSet<Curso>();
-    
-   
+
 
 	public String getRango() {
 		return rango;
@@ -75,7 +71,6 @@ public class Soldado extends Persona implements Comparable<Soldado>{
 	    
 	}
 
-	
 	public void eliminarCurso(Curso curso) {
 	    if (getCursos().contains(curso)) {
 	        if (curso.getSoldados().contains(this)) {
@@ -97,15 +92,9 @@ public class Soldado extends Persona implements Comparable<Soldado>{
 	    return this.rango.compareTo(otroSoldado.rango);
 	}
 
-
-
-	
 	@Override
 	public String toString() {
 		return "Soldado [rango=" + rango + ", peso=" + peso + ", altura=" + altura + ", cursos=" + cursos + "]";
 	}
-    
-    
-	
 
 }

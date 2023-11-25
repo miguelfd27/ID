@@ -13,13 +13,11 @@ public interface PersonaDao {
 	void setup (Configuracion config);
 	
 	// OPERACIONS CRUD BASICAS
-		Persona recuperaPorId (String dni);
-		Persona alta (Persona persona);
-		void elimina (Persona persona);
-		Persona actualiza (Persona persona);
-		//QUERIES ADICIONAIS
+	Persona recuperaPorId (String dni);
+	Persona alta (Persona persona);
+	void elimina (Persona persona);
+	Persona actualiza (Persona persona);
 
-		List<Object[]> obtenerSoldadosConOCuSinCursosOrdenados();
-
-
+	//QUERIES ADICIONAIS
+	List<Object[]> obtenerSoldadosConOCuSinCursosOrdenados();
 }

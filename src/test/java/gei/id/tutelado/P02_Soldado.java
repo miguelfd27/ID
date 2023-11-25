@@ -84,11 +84,11 @@ public class P02_Soldado {
 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
 
 		produtorDatos.creaCursosSueltos();
-		produtorDatos.creaInstructoresNuevos(); // Agrega esta línea para crear instructores
+		produtorDatos.creaInstructoresNuevos();
 	    produtorDatos.guardaInstructores();
 		produtorDatos.creaSoldadosNuevos();
 		produtorDatos.s0.agregarCurso(produtorDatos.c0);
-    	//produtorDatos.guardaSoldados();
+
 		Instructor instructor = produtorDatos.i0;
 	    produtorDatos.c0.setInstructor(instructor);
 	    Instructor instructor2 = produtorDatos.i1;
@@ -98,36 +98,31 @@ public class P02_Soldado {
 
 
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba da recuperación (por codigo) de soldados soltas\n"   
-		+ "\t\t\t\t Casos contemplados:\n"
-		+ "\t\t\t\t a) Recuperación por codigo existente\n"
-		+ "\t\t\t\t b) Recuperacion por codigo inexistente\n");     	
+    	log.info("Obxectivo: Proba da recuperación (por codigo) de soldados soltos\n"
+				+ "\t\t\t\t Casos contemplados:\n"
+				+ "\t\t\t\t a) Recuperación por codigo existente\n"
+				+ "\t\t\t\t b) Recuperacion por codigo inexistente\n");
 
-    	// Situación de partida:
-    	// s1, s1A, s1B desligados
+
     	
 		log.info("Probando recuperacion por codigo EXISTENTE --------------------------------------------------");
 
     	s = (Soldado) persDao.recuperaPorId(produtorDatos.s0.getDni());
-    	
 
-    	Assert.assertEquals (produtorDatos.s0.getDni(),     s.getDni());
+    	Assert.assertEquals (produtorDatos.s0.getDni(), s.getDni());
     	Assert.assertEquals (produtorDatos.s0.getNombre(), s.getNombre());
-    	Assert.assertEquals (produtorDatos.s0.getFechaAlta(),   s.getFechaAlta());
-    	Assert.assertEquals (produtorDatos.s0.getFechaNacimiento(),   s.getFechaNacimiento());
-    	Assert.assertEquals (produtorDatos.s0.getRango(),   s.getRango());
-    	Assert.assertEquals (produtorDatos.s0.getPeso(),    s.getPeso());
-    	Assert.assertEquals (produtorDatos.s0.getAltura(),  s.getAltura());
-    	Assert.assertEquals (produtorDatos.s0.getCursos(),    s.getCursos());
-
-    	
+    	Assert.assertEquals (produtorDatos.s0.getFechaAlta(), s.getFechaAlta());
+    	Assert.assertEquals (produtorDatos.s0.getFechaNacimiento(), s.getFechaNacimiento());
+    	Assert.assertEquals (produtorDatos.s0.getRango(), s.getRango());
+    	Assert.assertEquals (produtorDatos.s0.getPeso(), s.getPeso());
+    	Assert.assertEquals (produtorDatos.s0.getAltura(), s.getAltura());
+    	Assert.assertEquals (produtorDatos.s0.getCursos(), s.getCursos());
 
     	log.info("");	
 		log.info("Probando recuperacion por codigo INEXISTENTE --------------------------------------------------");
     	
     	s = (Soldado) persDao.recuperaPorId("iwbvyhuebvuwebvi");
     	Assert.assertNull (s);
-
     } 	
    
     @Test
@@ -138,36 +133,31 @@ public class P02_Soldado {
 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
 
 		produtorDatos.creaCursosSueltos();
-		 produtorDatos.creaInstructoresNuevos(); // Agrega esta línea para crear instructores
-		    produtorDatos.guardaInstructores();
+		produtorDatos.creaInstructoresNuevos();
+		produtorDatos.guardaInstructores();
 		    
-		    Instructor instructor = produtorDatos.i0;
-		    produtorDatos.c0.setInstructor(instructor);
-		    Instructor instructor2 = produtorDatos.i1;
-		    produtorDatos.c1.setInstructor(instructor2);
+		Instructor instructor = produtorDatos.i0;
+		produtorDatos.c0.setInstructor(instructor);
+		Instructor instructor2 = produtorDatos.i1;
+		produtorDatos.c1.setInstructor(instructor2);
     	produtorDatos.guardaCursos();
     	produtorDatos.creaSoldadosNuevos();
 
     	log.info("");	
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba da gravación de entradas de log soltas\n"   
+    	log.info("Obxectivo: Proba da gravación de soldados soltos\n"
     			+ "\t\t\t\t Casos contemplados:\n"
-    			+ "\t\t\t\t a) Primeira entrada de log vinculada a un usuario\n"
-    			+ "\t\t\t\t b) Nova entrada de log para un usuario con entradas previas\n");     	
+    			+ "\t\t\t\t a) Primeiro soldado vinculado a un curso\n"
+    			+ "\t\t\t\t b) Novo soldado para un curso\n");
 
-    	// Situación de partida:
-    	// u1 desligado    	
-    	// e1A, e1B transitorios
 
     	produtorDatos.s0.agregarCurso(produtorDatos.c0);
 
-		
     	log.info("");	
-		log.info("Gravando primeira entrada de log dun usuario --------------------------------------------------------------------");
+		log.info("Gravando o primeiro soldado -------------------------------------------------------------------------------------");
     	Assert.assertNull(produtorDatos.s0.getId());
     	persDao.alta(produtorDatos.s0);
     	Assert.assertNotNull(produtorDatos.s0.getId());
-
 
     }
     
@@ -181,26 +171,26 @@ public class P02_Soldado {
 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
   
 		produtorDatos.creaCursosSueltos();
-		 produtorDatos.creaInstructoresNuevos(); // Agrega esta línea para crear instructores
-		    produtorDatos.guardaInstructores();
+		produtorDatos.creaInstructoresNuevos();
+		produtorDatos.guardaInstructores();
+
 		produtorDatos.creaSoldadosNuevos();
 		produtorDatos.s0.agregarCurso(produtorDatos.c0);
+
 		Instructor instructor = produtorDatos.i0;
 	    produtorDatos.c0.setInstructor(instructor);
 	    Instructor instructor2 = produtorDatos.i1;
 	    produtorDatos.c1.setInstructor(instructor2);
-    	produtorDatos.guardaCursos();
+
+		produtorDatos.guardaCursos();
 
 
     	log.info("");	
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de modificación da información dunha entrada de log solta\n");
+    	log.info("Obxectivo: Proba de modificación da información dun soldado solto\n");
  
-    	
-    	// Situación de partida:
-    	// e1A desligado
-    	
-		nuevoPeso =Double.valueOf(75.69);
+
+		nuevoPeso = Double.valueOf(75.69);
 
 		s1 = (Soldado) persDao.recuperaPorId(produtorDatos.s0.getDni());
 
@@ -212,8 +202,6 @@ public class P02_Soldado {
 		s2 = (Soldado) persDao.recuperaPorId(produtorDatos.s0.getDni());
 		Assert.assertEquals (nuevoPeso, s2.getPeso());
 
-    	// NOTA: Non probamos modificación de usuario da entrada porque non ten sentido no dominio considerado
-
     }
     
     @Test 
@@ -223,31 +211,27 @@ public class P02_Soldado {
 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
 
 		produtorDatos.creaCursosSueltos();
-		produtorDatos.creaInstructoresNuevos(); // Agrega esta línea para crear instructores
+		produtorDatos.creaInstructoresNuevos();
 	    produtorDatos.guardaInstructores();
+
 		produtorDatos.creaSoldadosNuevos();
 		produtorDatos.s0.agregarCurso(produtorDatos.c0);
+
 		Instructor instructor = produtorDatos.i0;
 	    produtorDatos.c0.setInstructor(instructor);
 	    Instructor instructor2 = produtorDatos.i1;
 	    produtorDatos.c1.setInstructor(instructor2);
-	    produtorDatos.guardaCursos();
+
+		produtorDatos.guardaCursos();
 	    
     	log.info("");	
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de eliminación de entrada de log solta (asignada a usuario)\n");
-    	
-    	// Situación de partida:
-    	// e1A desligado
+    	log.info("Obxectivo: Proba de eliminación de soldado solto\n");
 
 		Assert.assertNotNull(persDao.recuperaPorId(produtorDatos.s0.getDni()));
     	persDao.elimina(produtorDatos.s0);    	
 		Assert.assertNull(persDao.recuperaPorId(produtorDatos.s0.getDni()));
 
-    } 	
-    
-
-	
-	
+    }
 
 }
