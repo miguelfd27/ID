@@ -152,5 +152,66 @@ public class P05_Consultas {
 
     }
 
+    @Test
+    public void test08_InstructoresConMasDeUnCurso() {
+
+        List<Instructor> listaInstructores;
+
+        log.info("");
+        log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+
+        produtorDatos.creaCursosSueltos();
+        produtorDatos.creaInstructoresNuevos();
+        produtorDatos.guardaInstructores();
+        produtorDatos.creaSoldadosNuevos();
+        produtorDatos.s0.agregarCurso(produtorDatos.c0);
+        produtorDatos.s1.agregarCurso(produtorDatos.c1);
+
+        Instructor instructor = produtorDatos.i0;
+        produtorDatos.c0.setInstructor(instructor);
+        produtorDatos.c1.setInstructor(instructor);
+        produtorDatos.guardaCursos();
+
+        log.info("");
+        log.info("Inicio do test --------------------------------------------------------------------------------------------------");
+        log.info("Obxectivo: Proba da consulta Instructor.obtenerInstructoresConMasDeUnCurso\n");
+
+        listaInstructores = persDao.obtenerInstructoresConMasDeUnCurso();
+
+        Assert.assertEquals(1, listaInstructores.size());
+
+    }
+
+    @Test
+    public void testContarTotalSoldadosPorCurso() {
+        List<Object[]> resultados;
+
+        log.info("");
+        log.info("Configurando situación de partida del test ----------------------------------------");
+
+        produtorDatos.creaCursosSueltos();
+        produtorDatos.creaInstructoresNuevos();
+        produtorDatos.guardaInstructores();
+        produtorDatos.creaSoldadosNuevos();
+        produtorDatos.s0.agregarCurso(produtorDatos.c0);
+        produtorDatos.s1.agregarCurso(produtorDatos.c1);
+
+        Instructor instructor = produtorDatos.i0;
+        produtorDatos.c0.setInstructor(instructor);
+        produtorDatos.c1.setInstructor(instructor);
+        produtorDatos.guardaCursos();
+
+
+        log.info("");
+        log.info("Inicio del test --------------------------------------------------------------------");
+        log.info("Objetivo: Probar la consulta Soldado.contarTotalSoldadosPorCurso\n");
+
+        resultados = persDao.contarTotalSoldadosPorCurso();
+
+        Assert.assertEquals(2, resultados.size());
+        Object[] primerResultado = resultados.get(0);
+        Assert.assertEquals(2L, primerResultado[0]);
+    }
+
 
 }

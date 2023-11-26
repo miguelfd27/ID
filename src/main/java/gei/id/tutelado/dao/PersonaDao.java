@@ -20,4 +20,8 @@ public interface PersonaDao {
 
 	//QUERIES ADICIONAIS
 	List<Object[]> obtenerSoldadosConOCuSinCursosOrdenados();
+
+	List<Instructor> obtenerInstructoresConMasDeUnCurso();
+
+	List<Object[]> contarTotalSoldadosPorCurso();
 }

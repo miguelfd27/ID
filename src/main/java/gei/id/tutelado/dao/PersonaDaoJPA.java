@@ -149,4 +149,58 @@ public class PersonaDaoJPA implements PersonaDao {
 	}
 
 
+	@Override
+	public List<Instructor> obtenerInstructoresConMasDeUnCurso() {
+	    List<Instructor> instructores = null;
+
+	    try {
+	        em = emf.createEntityManager();
+	        em.getTransaction().begin();
+
+	        instructores = em.createNamedQuery("Instructor.obtenerInstructoresConMasDeUnCurso", Instructor.class)
+	                .getResultList();
+
+	        em.getTransaction().commit();
+	    } catch (Exception ex) {
+	        if (em != null && em.isOpen()) {
+	            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+	            throw ex;
+	        }
+	    } finally {
+	        if (em != null && em.isOpen()) {
+	            em.close();
+	        }
+	    }
+
+	    return instructores;
+	}
+
+	// Método JPA para contar el total de soldados por curso
+	@Override
+	public List<Object[]> contarTotalSoldadosPorCurso() {
+	    List<Object[]> resultados = null;
+
+	    try {
+	        em = emf.createEntityManager();
+	        em.getTransaction().begin();
+
+	        resultados = em.createNamedQuery("Soldado.contarTotalSoldadosPorCurso", Object[].class)
+	                .getResultList();
+
+	        em.getTransaction().commit();
+	    } catch (Exception ex) {
+	        if (em != null && em.isOpen()) {
+	            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+	            throw ex;
+	        }
+	    } finally {
+	        if (em != null && em.isOpen()) {
+	            em.close();
+	        }
+	    }
+
+	    return resultados;
+	}
+
+
 }

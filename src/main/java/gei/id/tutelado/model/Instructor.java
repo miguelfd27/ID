@@ -12,7 +12,12 @@ import javax.persistence.*;
 	@NamedQuery (name="Instructor.recuperaTodosInstructor",
 				 query="SELECT i FROM Instructor i ORDER BY i.dni"),
 	@NamedQuery (name="Instructor.cursosInstructor",
-	 			 query="SELECT COUNT(c) FROM Curso c WHERE c.instructor = :instructor ORDER BY c.idCurso ASC")
+	 			 query="SELECT COUNT(c) FROM Curso c WHERE c.instructor = :instructor ORDER BY c.idCurso ASC"),
+	@NamedQuery(
+			   name = "Instructor.obtenerInstructoresConMasDeUnCurso",
+			   query = "SELECT i FROM Instructor i WHERE (SELECT COUNT(c) FROM Curso c WHERE c.instructor = i) > 1"
+			)
+
 })
 
 @Entity
