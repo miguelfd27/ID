@@ -18,7 +18,6 @@ import gei.id.tutelado.configuracion.ConfiguracionJPA;
 import gei.id.tutelado.dao.PersonaDao;
 import gei.id.tutelado.dao.PersonaDaoJPA;
 import gei.id.tutelado.model.Instructor;
-import gei.id.tutelado.model.Soldado;
 
 public class P03_Instructor {
 	

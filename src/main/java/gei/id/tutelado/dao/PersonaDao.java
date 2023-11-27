@@ -5,7 +5,6 @@ import java.util.List;
 import gei.id.tutelado.configuracion.Configuracion;
 import gei.id.tutelado.model.Instructor;
 import gei.id.tutelado.model.Persona;
-import gei.id.tutelado.model.Soldado;
 
 public interface PersonaDao {
 	

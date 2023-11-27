@@ -24,7 +24,6 @@ import gei.id.tutelado.dao.PersonaDao;
 import gei.id.tutelado.dao.PersonaDaoJPA;
 import gei.id.tutelado.model.Curso;
 import gei.id.tutelado.model.Instructor;
-import gei.id.tutelado.model.Usuario;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
@@ -143,7 +142,7 @@ public class P05_Consultas {
 
         log.info("");
         log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-        log.info("Obxectivo: Proba da consulta Usuario.recuperaTodos\n");
+        log.info("Obxectivo: Proba da consulta soldado.obtenerSoldadosConOCuSinCursosOrdenados\n");
 
 
         listaInstructoresyCursos = persDao.obtenerSoldadosConOCuSinCursosOrdenados();
@@ -183,7 +182,7 @@ public class P05_Consultas {
     }
 
     @Test
-    public void testContarTotalSoldadosPorCurso() {
+    public void test09_ContarTotalSoldadosPorCurso() {
         List<Object[]> resultados;
 
         log.info("");

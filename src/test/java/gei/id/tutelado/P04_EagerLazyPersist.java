@@ -1,11 +1,9 @@
 package gei.id.tutelado;
 
-import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.LazyInitializationException;
-import org.hibernate.mapping.Set;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,7 +16,6 @@ import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runners.MethodSorters;
 
-import antlr.collections.List;
 import gei.id.tutelado.configuracion.Configuracion;
 import gei.id.tutelado.configuracion.ConfiguracionJPA;
 import gei.id.tutelado.dao.CursoDao;
@@ -27,7 +24,6 @@ import gei.id.tutelado.dao.PersonaDao;
 import gei.id.tutelado.dao.PersonaDaoJPA;
 import gei.id.tutelado.model.Curso;
 import gei.id.tutelado.model.Instructor;
-import gei.id.tutelado.model.Persona;
 import gei.id.tutelado.model.Soldado;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
