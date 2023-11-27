@@ -84,7 +84,7 @@ public class P05_Consultas {
 
 
     @Test
-    public void test06_CursosConInstructoresYSoldados() {
+    public void test08_cursosConInstructoresYSoldados() {
 
         List<Curso> listaCursos;
 
@@ -117,7 +117,7 @@ public class P05_Consultas {
     }
 
     @Test
-    public void test07_CursosConInstructoresYSoldados() {
+    public void test09_soldadosConOCuSinCursosOrdenados() {
 
         List<Object[]> listaInstructoresyCursos;
 
@@ -152,7 +152,7 @@ public class P05_Consultas {
     }
 
     @Test
-    public void test08_InstructoresConMasDeUnCurso() {
+    public void test10_instructoresConMasDeUnCurso() {
 
         List<Instructor> listaInstructores;
 
@@ -182,7 +182,7 @@ public class P05_Consultas {
     }
 
     @Test
-    public void test09_ContarTotalSoldadosPorCurso() {
+    public void test11_contarTotalSoldadosPorCurso() {
         List<Object[]> resultados;
 
         log.info("");

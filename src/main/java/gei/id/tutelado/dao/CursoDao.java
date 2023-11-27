@@ -5,7 +5,6 @@ import java.util.List;
 
 import gei.id.tutelado.configuracion.Configuracion;
 import gei.id.tutelado.model.Curso;
-import gei.id.tutelado.model.Instructor;
 
 
 public interface CursoDao {
@@ -22,8 +21,9 @@ public interface CursoDao {
 
 	//QUERIES ADICIONAIS
 	List<Curso> recuperaTodosCursos(Curso c);
-	List<Curso> cursosInstructor(Instructor instructor);
 	List<Curso> CursosConInstructoresYSoldados();
+	//List<Curso> cursosInstructor(Instructor instructor);
+
 
 		
 

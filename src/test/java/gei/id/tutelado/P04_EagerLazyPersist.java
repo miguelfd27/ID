@@ -86,7 +86,7 @@ public class P04_EagerLazyPersist {
 
 
     @Test
-    public void test07_EAGER() {
+    public void test06_EAGER() {
 
         Curso c;
         Boolean excepcion;
@@ -168,7 +168,7 @@ public class P04_EagerLazyPersist {
     }
 
     @Test
-    public void test08_LAZY() {
+    public void test07_LAZY() {
 
         Curso c;
 
